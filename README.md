@@ -43,3 +43,8 @@ minikube config set memory 6144
 ```
 kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h <<database host e.g. user-db>> -p<<password>>
 ```
+
+### Get URL
+```
+minikube service web --url
+```
