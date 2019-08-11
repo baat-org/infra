@@ -5,7 +5,7 @@ metadata:
   labels:
     app: user
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: user
@@ -30,8 +30,8 @@ spec:
               value: "user"
             - name: DATABASE_PASSWORD
               value: "password"
-            - name: DATABASE_INITIALISE
-              value: "true"
+            - name: DATABASE_INITIALIZATION_MODE
+              value: "always"
           ports:
             - containerPort: 8080
 ---
