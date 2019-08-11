@@ -1,6 +1,19 @@
 # k8s
 Kubernetes
 
+Minikube recreate:
+```
+minikube delete
+minikube start
+
+```
+
+Minikube configs:
+```
+minikube config set disk-size 6GB
+minikube config set memory 6144
+```
+
 User service and database:
 ```
 kubectl create -f k8s/user/database-deployment.yml
