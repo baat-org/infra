@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: user
-          image: sachingoyaldocker/baat-org-user:1.0
+          image: sachingoyaldocker/baat-org-user
           env:
             - name: SERVER_PORT
               value: "8080"
