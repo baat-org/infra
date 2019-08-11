@@ -40,6 +40,7 @@ spec:
           ports:
             - containerPort: 3306
               name: user-db
+          imagePullPolicy: "Always"
           volumeMounts:
             - name: user-db-persistent-storage
               mountPath: /var/lib/user-db
