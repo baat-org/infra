@@ -27,6 +27,11 @@ kubectl create -f k8s/chat/database-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 ```
 
+Websockets service:
+```
+kubectl create -f k8s/websockets/service-deployment.yml
+```
+
 To connect to database:
 ```
 kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h <<database host e.g. user-db>> -p<<password>>
