@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat
+  labels:
+    app: chat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat
+  template:
+    metadata:
+      labels:
+        app: chat
+    spec:
+      containers:
+        - name: user
+          image: sachingoyaldocker/baat-org-chat:1.0
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+            - name: DATABASE_HOST
+              value: "chat-db"
+            - name: DATABASE_PORT
+              value: "3306"
+            - name: DATABASE_NAME
+              value: "chat"
+            - name: DATABASE_USER
+              value: "chat"
+            - name: DATABASE_PASSWORD
+              value: "password"
+            - name: DATABASE_INITIALIZATION_MODE
+              value: "always"
+            - name: RABBITMQ_HOST
+              value: "chat-mq"
+            - name: USER_SERVICE_URI
+              value: "http://user:8080"
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: "Always"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat
+  labels:
+    app: chat
+spec:
+  ports:
+    - name: http
+      port: 8080
+  selector:
+    app: chat
+  type: LoadBalancer
