@@ -25,6 +25,23 @@ kubectl create -f k8s/websockets/service-deployment.yml
 kubectl create -f k8s/web/service-deployment.yml
 ```
 
+### Recreate baat cluster:
+```
+minikube config set disk-size 20GB
+minikube config set memory 6144
+minikube delete
+minikube start
+minikube addons enable ingress
+
+kubectl create -f k8s/user/database-deployment.yml
+kubectl create -f k8s/user/service-deployment.yml
+kubectl create -f k8s/chat/database-deployment.yml
+kubectl create -f k8s/chat/messaging-deployment.yml
+kubectl create -f k8s/chat/service-deployment.yml
+kubectl create -f k8s/websockets/service-deployment.yml
+kubectl create -f k8s/web/service-deployment.yml
+```
+
 ## Useful tips:
 
 ### Minikube recreate:
@@ -35,7 +52,7 @@ minikube start
 
 ### Minikube configs:
 ```
-minikube config set disk-size 6GB
+minikube config set disk-size 20GB
 minikube config set memory 6144
 ```
 
