@@ -20,6 +20,12 @@ spec:
           env:
             - name: SERVER_PORT
               value: "8080"
+            - name: USER_API_URI
+              value: "http://api.baat.org/user"
+            - name: CHAT_API_URI
+              value: "http://api.baat.org/chat"
+            - name: WEBSOCKETS_API_URI
+              value: "wss://api.baat.org/websockets/websockets"
             - name: USER_SERVICE_URI
               value: "http://user:8080"
           ports:

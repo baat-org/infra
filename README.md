@@ -31,6 +31,7 @@ minikube config set disk-size 20GB
 minikube config set memory 6144
 minikube delete
 minikube start
+minikube addons enable ingress
 
 kubectl create -f k8s/user/database-deployment.yml
 kubectl create -f k8s/user/service-deployment.yml
@@ -39,6 +40,11 @@ kubectl create -f k8s/chat/messaging-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 kubectl create -f k8s/websockets/service-deployment.yml
 kubectl create -f k8s/web/service-deployment.yml
+kubectl apply -f  k8s/ingress/ingress-deployment.yml
+
+minikube ip
+
+echo "update /etc/hosts with above IP and host as baat.org"
 ```
 
 ## Useful tips:
@@ -60,7 +66,7 @@ minikube config set memory 6144
 kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h <<database host e.g. user-db>> -p<<password>>
 ```
 
-### Get URL
+### Get a service's URL
 ```
-minikube service web --url
+minikube service <<service name>> --url
 ```
