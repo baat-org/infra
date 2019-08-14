@@ -44,7 +44,7 @@ kubectl apply -f  k8s/ingress/ingress-deployment.yml
 
 minikube ip
 
-echo "update /etc/hosts with above IP and host as baat.org"
+echo "update /etc/hosts with above IP and host as baat.org & api.baat.org"
 ```
 
 ## Useful tips:
