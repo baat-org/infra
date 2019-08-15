@@ -4,12 +4,13 @@ metadata:
   name: baat-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/add-base-url: "true"
 spec:
   rules:
     - host: baat.org
       http:
         paths:
-          - path: /*
+          - path: /
             backend:
               serviceName: web
               servicePort: 8080
@@ -24,7 +25,10 @@ spec:
             backend:
               serviceName: chat
               servicePort: 8080
-          - path: /websockets
+    - host: websockets.baat.org
+      http:
+        paths:
+          - path: /
             backend:
               serviceName: websockets
               servicePort: 8080
