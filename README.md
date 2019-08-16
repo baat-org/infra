@@ -40,7 +40,10 @@ kubectl create -f k8s/chat/messaging-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 kubectl create -f k8s/websockets/service-deployment.yml
 kubectl create -f k8s/web/service-deployment.yml
-kubectl apply -f  k8s/ingress/ingress-deployment.yml
+
+kubectl apply -f k8s/ingress/web-ingress-deployment.yml
+kubectl apply -f k8s/ingress/websockets-ingress-deployment.yml
+kubectl apply -f k8s/ingress/api-ingress-deployment.yml
 
 minikube ip
 
