@@ -25,7 +25,7 @@ spec:
             - name: CHAT_API_URI
               value: "http://api.baat.org/chat"
             - name: WEBSOCKETS_URI
-              value: "wss://websockets.baat.org/websockets"
+              value: "ws://websockets.baat.org/websockets"
             - name: USER_SERVICE_URI
               value: "http://user:8080"
           ports:
