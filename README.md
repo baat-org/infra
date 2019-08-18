@@ -1,6 +1,13 @@
 # k8s
 Kubernetes
 
+## Installations
+* Docker: https://docs.docker.com/docker-for-mac/install/
+* Virtual Box if you don't already have it: `brew cask install virtualbox`
+* Minikube: `brew cask install minikube`
+* Kubernetes cli tools: `brew install kubernetes-cli`
+
+
 ## Deployments
 ### User service and database:
 ```
