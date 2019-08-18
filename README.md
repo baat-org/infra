@@ -86,5 +86,5 @@ minikube dashboard
 ```
 
 ### Good resources:
-* github.com/burrsutter/9stepsawesome
-* https://www.youtube.com/watch?v=ZpbXSdzp_vo&t=2565s
+* https://www.youtube.com/watch?v=ZpbXSdzp_vo
+* https://github.com/burrsutter/9stepsawesome
