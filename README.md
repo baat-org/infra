@@ -84,3 +84,7 @@ minikube service <<service name>> --url
 ```
 minikube dashboard
 ```
+
+### Good resources:
+* github.com/burrsutter/9stepsawesome
+* https://www.youtube.com/watch?v=ZpbXSdzp_vo&t=2565s
