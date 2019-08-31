@@ -57,6 +57,32 @@ minikube ip
 echo "update /etc/hosts with above IP and host for baat.org, api.baat.org & websockets.baat.org"
 ```
 
+## AWS EKS
+
+### Setup
+
+```
+From AWS management console (IAM):
+1. Create user (baat-user)
+2. Create group (admin) (AdminAccessAll), and assign user.
+
+Command line:
+1. brew install weaveworks/tap/eksctl
+2. aws configure (and setup access key password to this user)
+```
+
+### AWS EKS cluster
+```
+eksctl create cluster \
+    --name baat-eks-cluster \
+    --version 1.13 \
+    --nodegroup-name standard-workers \
+    --node-type t3.medium \
+    --nodes 3 \
+    --nodes-min 1 \
+    --nodes-max 4 \
+    --node-ami auto
+```
 ## Useful tips:
 
 ### Minikube recreate:
