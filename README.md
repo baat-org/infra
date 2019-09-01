@@ -83,6 +83,29 @@ eksctl create cluster \
     --nodes-max 4 \
     --node-ami auto
 ```
+
+### Deploy on cluster
+```
+kubectl create -f k8s/user/database-deployment.yml
+kubectl create -f k8s/user/service-deployment.yml
+kubectl create -f k8s/chat/database-deployment.yml
+kubectl create -f k8s/chat/messaging-deployment.yml
+kubectl create -f k8s/chat/service-deployment.yml
+kubectl create -f k8s/websockets/service-deployment.yml
+kubectl create -f k8s/web/service-deployment.yml
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+kubectl apply -f https://raw.githubusercontent.com/cornellanthony/nlb-nginxIngress-eks/master/nlb-service.yaml
+
+kubectl apply -f k8s/ingress/web-ingress-deployment.yml
+kubectl apply -f k8s/ingress/websockets-ingress-deployment.yml
+kubectl apply -f k8s/ingress/api-ingress-deployment.yml
+
+kubectl get ingress
+
+echo "update /etc/hosts with above IP and host for baat.org, api.baat.org & websockets.baat.org"
+```
+
 ## Useful tips:
 
 ### Minikube recreate:
