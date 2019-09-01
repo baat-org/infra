@@ -74,7 +74,7 @@ Command line:
 ### AWS EKS cluster
 ```
 eksctl create cluster \
-    --name baat-eks-cluster \
+    --name baat \
     --version 1.13 \
     --nodegroup-name standard-workers \
     --node-type t3.medium \
