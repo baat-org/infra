@@ -56,9 +56,10 @@ kubectl create -f k8s/gqlapi/service-deployment.yml
 
 ----
 
-minikube ip
+minikube ip (IP for all services)
+kubectl get services (Port for each service is different)
 
-Update k8s/web/service-deployment.yml with IPs for dependent services.
+Update k8s/web/service-deployment.yml with IP/port for dependent services.
 
 kubectl create -f k8s/web/service-deployment.yml
 ```
