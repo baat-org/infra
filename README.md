@@ -30,7 +30,7 @@ kubectl create -f k8s/websockets/service-deployment.yml
 
 ### GQL API service:
 ```
-kubectl create -f k8s/gql_api/service-deployment.yml
+kubectl create -f k8s/gqlapi/service-deployment.yml
 ```  
 
 ### Web service:
@@ -52,7 +52,7 @@ kubectl create -f k8s/chat/database-deployment.yml
 kubectl create -f k8s/chat/messaging-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 kubectl create -f k8s/websockets/service-deployment.yml
-kubectl create -f k8s/gql_api/service-deployment.yml
+kubectl create -f k8s/gqlapi/service-deployment.yml
 
 ----
 
@@ -99,7 +99,7 @@ kubectl create -f k8s/chat/database-deployment.yml
 kubectl create -f k8s/chat/messaging-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 kubectl create -f k8s/websockets/service-deployment.yml
-kubectl create -f k8s/gql_api/service-deployment.yml
+kubectl create -f k8s/gqlapi/service-deployment.yml
 
 ----
 

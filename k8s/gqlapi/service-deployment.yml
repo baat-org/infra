@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gql_api
+  name: gqlapi
   labels:
-    app: gql_api
+    app: gqlapi
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: gql_api
+      app: gqlapi
   template:
     metadata:
       labels:
-        app: gql_api
+        app: gqlapi
     spec:
       containers:
-        - name: gql_api
-          image: sachingoyaldocker/baat-org-gql_api:1.0
+        - name: gqlapi
+          image: sachingoyaldocker/baat-org-gqlapi:1.0
           env:
             - name: SERVER_PORT
               value: "8080"
@@ -31,14 +31,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gql_api
+  name: gqlapi
   labels:
-    app: gql_api
+    app: gqlapi
 spec:
   ports:
     - protocol: "TCP"
       port: 8080
       targetPort: 8080
   selector:
-    app: gql_api
+    app: gqlapi
   type: LoadBalancer
