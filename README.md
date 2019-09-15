@@ -9,30 +9,43 @@ Kubernetes
 
 
 ## Deployments
-### User service and database:
+
+### Backend Services
+
+#### User service and database:
 ```
 kubectl create -f k8s/user/database-deployment.yml
 kubectl create -f k8s/user/service-deployment.yml
 ```
 
-### Chat service, messaging and database:
+#### Chat service, messaging and database:
 ```
 kubectl create -f k8s/chat/messaging-deployment.yml
 kubectl create -f k8s/chat/database-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 ```
 
-### Websockets service:
+#### Websockets service:
 ```
 kubectl create -f k8s/websockets/service-deployment.yml
 ```
 
-### Web service:
-```
-kubectl create -f k8s/web/service-deployment.yml
-```
+### API
 
-### Recreate baat cluster:
+#### GQL API service:
+1. Take note of IP/DNS for backend services and update `k8s/gql_api/service-deployment.yml`
+2. Deploy service: `kubectl create -f k8s/gql_api/service-deployment.yml`  
+
+### Frontend
+
+#### Web service:
+1. Take note of IP/DNS for websockets service, GQL API service and update `k8s/web/service-deployment.yml`
+2. Deploy service: `kubectl create -f k8s/web/service-deployment.yml`  
+
+
+## Minikube cluster setup
+
+### Create backend services/databases
 ```
 minikube config set disk-size 20GB
 minikube config set memory 6144
@@ -46,18 +59,22 @@ kubectl create -f k8s/chat/database-deployment.yml
 kubectl create -f k8s/chat/messaging-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 kubectl create -f k8s/websockets/service-deployment.yml
-kubectl create -f k8s/web/service-deployment.yml
-
-kubectl apply -f k8s/ingress/web-ingress-deployment.yml
-kubectl apply -f k8s/ingress/websockets-ingress-deployment.yml
-kubectl apply -f k8s/ingress/api-ingress-deployment.yml
-
-minikube ip
-
-echo "update /etc/hosts with above IP and host for baat.org, api.baat.org & websockets.baat.org"
 ```
 
-## AWS EKS
+### Update API/Web dependencies on backend services
+```
+minikube ip
+
+Update k8s/web/service-deployment.yml & k8s/gql_api/service-deployment.yml with IPs for dependent services.
+```
+
+### Create API/Web services
+```
+kubectl create -f k8s/web/service-deployment.yml
+kubectl create -f k8s/gql_api/service-deployment.yml
+```
+
+## AWS EKS cluster setup
 
 ### Setup
 
@@ -84,7 +101,8 @@ eksctl create cluster \
     --node-ami auto
 ```
 
-### Deploy on cluster
+### Create backend services/databases
+
 ```
 kubectl create -f k8s/user/database-deployment.yml
 kubectl create -f k8s/user/service-deployment.yml
@@ -93,17 +111,17 @@ kubectl create -f k8s/chat/messaging-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 kubectl create -f k8s/websockets/service-deployment.yml
 kubectl create -f k8s/web/service-deployment.yml
+```
 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
-kubectl apply -f https://raw.githubusercontent.com/cornellanthony/nlb-nginxIngress-eks/master/nlb-service.yaml
+### Update API/Web dependencies on backend services
+```
+Update k8s/web/service-deployment.yml & k8s/gql_api/service-deployment.yml with IPs for dependent services.
+```
 
-kubectl apply -f k8s/ingress/web-ingress-deployment.yml
-kubectl apply -f k8s/ingress/websockets-ingress-deployment.yml
-kubectl apply -f k8s/ingress/api-ingress-deployment.yml
-
-kubectl get ingress
-
-echo "update /etc/hosts with above IP and host for baat.org, api.baat.org & websockets.baat.org"
+### Create API/Web services
+```
+kubectl create -f k8s/web/service-deployment.yml
+kubectl create -f k8s/gql_api/service-deployment.yml
 ```
 
 ## Useful tips:
