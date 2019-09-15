@@ -10,42 +10,36 @@ Kubernetes
 
 ## Deployments
 
-### Backend Services
-
-#### User service and database:
+### User service and database:
 ```
 kubectl create -f k8s/user/database-deployment.yml
 kubectl create -f k8s/user/service-deployment.yml
 ```
 
-#### Chat service, messaging and database:
+### Chat service, messaging and database:
 ```
 kubectl create -f k8s/chat/messaging-deployment.yml
 kubectl create -f k8s/chat/database-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 ```
 
-#### Websockets service:
+### Websockets service:
 ```
 kubectl create -f k8s/websockets/service-deployment.yml
 ```
 
-### API
+### GQL API service:
+```
+kubectl create -f k8s/gql_api/service-deployment.yml
+```  
 
-#### GQL API service:
-1. Take note of IP/DNS for backend services and update `k8s/gql_api/service-deployment.yml`
-2. Deploy service: `kubectl create -f k8s/gql_api/service-deployment.yml`  
-
-### Frontend
-
-#### Web service:
-1. Take note of IP/DNS for websockets service, GQL API service and update `k8s/web/service-deployment.yml`
+### Web service:
+1. Take note of IP/DNS for Websockets service, GQL API service and update `k8s/web/service-deployment.yml`
 2. Deploy service: `kubectl create -f k8s/web/service-deployment.yml`  
 
 
 ## Minikube cluster setup
 
-### Create backend services/databases
 ```
 minikube config set disk-size 20GB
 minikube config set memory 6144
@@ -58,19 +52,15 @@ kubectl create -f k8s/chat/database-deployment.yml
 kubectl create -f k8s/chat/messaging-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 kubectl create -f k8s/websockets/service-deployment.yml
-```
+kubectl create -f k8s/gql_api/service-deployment.yml
 
-### Update API/Web dependencies on backend services
-```
+----
+
 minikube ip
 
-Update k8s/web/service-deployment.yml & k8s/gql_api/service-deployment.yml with IPs for dependent services.
-```
+Update k8s/web/service-deployment.yml with IPs for dependent services.
 
-### Create API/Web services
-```
 kubectl create -f k8s/web/service-deployment.yml
-kubectl create -f k8s/gql_api/service-deployment.yml
 ```
 
 ## AWS EKS cluster setup
@@ -100,7 +90,7 @@ eksctl create cluster \
     --node-ami auto
 ```
 
-### Create backend services/databases
+### Deployment
 
 ```
 kubectl create -f k8s/user/database-deployment.yml
@@ -109,18 +99,13 @@ kubectl create -f k8s/chat/database-deployment.yml
 kubectl create -f k8s/chat/messaging-deployment.yml
 kubectl create -f k8s/chat/service-deployment.yml
 kubectl create -f k8s/websockets/service-deployment.yml
-kubectl create -f k8s/web/service-deployment.yml
-```
-
-### Update API/Web dependencies on backend services
-```
-Update k8s/web/service-deployment.yml & k8s/gql_api/service-deployment.yml with IPs for dependent services.
-```
-
-### Create API/Web services
-```
-kubectl create -f k8s/web/service-deployment.yml
 kubectl create -f k8s/gql_api/service-deployment.yml
+
+----
+
+Update k8s/web/service-deployment.yml with IPs or DNS for dependent services.
+kubectl create -f k8s/web/service-deployment.yml
+
 ```
 
 ## Useful tips:

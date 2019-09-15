@@ -21,9 +21,9 @@ spec:
             - name: SERVER_PORT
               value: "8080"
             - name: GQL_API_URI
-              value: "http://gql.api.baat.org"
+              value: "http://gql.api.baat.org"    # need to update
             - name: WEBSOCKETS_URI
-              value: "ws://websockets.baat.org/websockets"
+              value: "ws://websockets.baat.org/websockets"  # need to update
           ports:
             - containerPort: 8080
           imagePullPolicy: "Always"
