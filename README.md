@@ -51,7 +51,6 @@ minikube config set disk-size 20GB
 minikube config set memory 6144
 minikube delete
 minikube start
-minikube addons enable ingress
 
 kubectl create -f k8s/user/database-deployment.yml
 kubectl create -f k8s/user/service-deployment.yml
