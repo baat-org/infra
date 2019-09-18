@@ -80,6 +80,8 @@ Command line:
 
 ### AWS EKS cluster
 ```
+Create cluster, it already has auto scaling of cluster and pods baked in.
+
 eksctl create cluster \
     --name baat \
     --version 1.13 \
