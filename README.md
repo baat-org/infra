@@ -179,6 +179,7 @@ minikube service <<service name>> --url
 ### Minikube Dashboard
 ```
 minikube dashboard
+```
 
 ### Good resources:
 * https://www.youtube.com/watch?v=ZpbXSdzp_vo
