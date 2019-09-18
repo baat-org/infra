@@ -80,7 +80,8 @@ Command line:
 
 ### AWS EKS cluster
 ```
-Create cluster, it already has auto scaling of cluster and pods baked in.
+Create cluster, it will use autoscaling without any policy, but keep instances in min/max.
+To enable pod and cluster auto scaler they need to be setup seprately.
 
 eksctl create cluster \
     --name baat \
@@ -108,9 +109,49 @@ kubectl create -f k8s/gqlapi/service-deployment.yml
 
 Update k8s/web/service-deployment.yml with IPs or DNS for dependent services.
 kubectl create -f k8s/web/service-deployment.yml
+```
 
----- 
-how to add dashboard support?
+### Deploy dashboard
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml
+
+-------
+
+Create eks-admin-service-account.yaml with following:
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: eks-admin
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: eks-admin
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: eks-admin
+  namespace: kube-system
+
+-------
+kubectl apply -f eks-admin-service-account.yaml
+
+-------
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}')
+kubectl proxy
+
+Open:
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+
+And put the token.
 ```
 
 ### Delete AWS Kubernetes Cluster

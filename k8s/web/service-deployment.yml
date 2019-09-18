@@ -21,9 +21,9 @@ spec:
             - name: SERVER_PORT
               value: "8080"
             - name: GQL_API_URI
-              value: "http://192.168.99.105:31311/graphql"    # need to update
+              value: "http://aa14ee040da5e11e9be0406771a02f83-1284377437.us-west-2.elb.amazonaws.com:8080/graphql"    # need to update
             - name: WEBSOCKETS_URI
-              value: "ws://192.168.99.105:31990/websockets"  # need to update
+              value: "ws://a93c263d2da5e11e9a56f0ea6919addd-1807549038.us-west-2.elb.amazonaws.com:8080/websockets"  # need to update
             - name: USER_SERVICE_URI
               value: "http://user:8080"
           ports:
