@@ -83,7 +83,7 @@ Command line:
 eksctl create cluster \
     --name baat \
     --version 1.13 \
-    --nodegroup-name standard-workers \
+    --nodegroup-name baat-workers \
     --node-type t3.medium \
     --nodes 3 \
     --nodes-min 1 \
@@ -107,21 +107,21 @@ kubectl create -f k8s/gqlapi/service-deployment.yml
 Update k8s/web/service-deployment.yml with IPs or DNS for dependent services.
 kubectl create -f k8s/web/service-deployment.yml
 
+---- 
+how to add dashboard support?
+```
+
+### Delete AWS Kubernetes Cluster
+```
+kubectl get svc --all-namespaces
+
+kubectl delete svc `service-name`
+
+eksctl delete cluster --name baat
+
 ```
 
 ## Useful tips:
-
-### Minikube recreate:
-```
-minikube delete
-minikube start
-```
-
-### Minikube configs:
-```
-minikube config set disk-size 20GB
-minikube config set memory 6144
-```
 
 ### To connect to database:
 ```
@@ -132,10 +132,10 @@ kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h 
 ```
 minikube service <<service name>> --url
 ```
+
 ### Minikube Dashboard
 ```
 minikube dashboard
-```
 
 ### Good resources:
 * https://www.youtube.com/watch?v=ZpbXSdzp_vo
