@@ -49,4 +49,4 @@ spec:
       targetPort: 8080
   selector:
     app: user
-  type: LoadBalancer
+  type: ClusterIP

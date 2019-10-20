@@ -53,4 +53,4 @@ spec:
       targetPort: 8080
   selector:
     app: chat
-  type: LoadBalancer
+  type: ClusterIP
