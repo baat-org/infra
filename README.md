@@ -12,30 +12,30 @@ Kubernetes
 
 ### User service and database:
 ```
-kubectl create -f k8s/user/database-deployment.yml
-kubectl create -f k8s/user/service-deployment.yml
+kubectl create -f k8s/user/database-deployment.yml --namespace=baat
+kubectl create -f k8s/user/service-deployment.yml --namespace=baat
 ```
 
 ### Chat service, messaging and database:
 ```
-kubectl create -f k8s/chat/messaging-deployment.yml
-kubectl create -f k8s/chat/database-deployment.yml
-kubectl create -f k8s/chat/service-deployment.yml
+kubectl create -f k8s/chat/messaging-deployment.yml --namespace=baat
+kubectl create -f k8s/chat/database-deployment.yml --namespace=baat
+kubectl create -f k8s/chat/service-deployment.yml --namespace=baat
 ```
 
 ### Websockets service:
 ```
-kubectl create -f k8s/websockets/service-deployment.yml
+kubectl create -f k8s/websockets/service-deployment.yml --namespace=baat
 ```
 
 ### GQL API service:
 ```
-kubectl create -f k8s/gqlapi/service-deployment.yml
+kubectl create -f k8s/gqlapi/service-deployment.yml --namespace=baat
 ```  
 
 ### Web service:
 1. Take note of IP/DNS for Websockets service, GQL API service and update `k8s/web/service-deployment.yml`
-2. Deploy service: `kubectl create -f k8s/web/service-deployment.yml`  
+2. Deploy service: `kubectl create -f k8s/web/service-deployment.yml --namespace=baat`  
 
 
 ## Minikube cluster setup
@@ -46,22 +46,34 @@ minikube config set memory 6144
 minikube delete
 minikube start
 
-kubectl create -f k8s/user/database-deployment.yml
-kubectl create -f k8s/user/service-deployment.yml
-kubectl create -f k8s/chat/database-deployment.yml
-kubectl create -f k8s/chat/messaging-deployment.yml
-kubectl create -f k8s/chat/service-deployment.yml
-kubectl create -f k8s/websockets/service-deployment.yml
-kubectl create -f k8s/gqlapi/service-deployment.yml
+kubectl create namespace baat
+kubectl create -f k8s/user/database-deployment.yml --namespace=baat
+kubectl create -f k8s/user/service-deployment.yml --namespace=baat
+kubectl create -f k8s/chat/database-deployment.yml --namespace=baat
+kubectl create -f k8s/chat/messaging-deployment.yml --namespace=baat
+kubectl create -f k8s/chat/service-deployment.yml --namespace=baat
+kubectl create -f k8s/websockets/service-deployment.yml --namespace=baat
+kubectl create -f k8s/gqlapi/service-deployment.yml --namespace=baat
 
 ----
 
 minikube ip (IP for all services)
-kubectl get services (Port for each service is different)
+kubectl get services --namespace=baat (Port for each service is different)
 
 Update k8s/web/service-deployment.yml with minikube IP & ports for dependent services.
 
-kubectl create -f k8s/web/service-deployment.yml
+kubectl create -f k8s/web/service-deployment.yml --namespace=baat
+
+---
+
+Logging setup
+
+kubectl create namespace baatlogging
+kubectl create -f k8s/logging/elastic-deployment.yml --namespace=baatlogging
+kubectl create -f k8s/logging/kibana-deployment.yml --namespace=baatlogging
+kubectl create -f k8s/logging/fluentd-rbac.yml
+kubectl create -f k8s/logging/fluentd-demonset.yml
+
 ```
 
 ## AWS EKS cluster setup
@@ -97,18 +109,30 @@ eksctl create cluster \
 ### Deployment
 
 ```
-kubectl create -f k8s/user/database-deployment.yml
-kubectl create -f k8s/user/service-deployment.yml
-kubectl create -f k8s/chat/database-deployment.yml
-kubectl create -f k8s/chat/messaging-deployment.yml
-kubectl create -f k8s/chat/service-deployment.yml
-kubectl create -f k8s/websockets/service-deployment.yml
-kubectl create -f k8s/gqlapi/service-deployment.yml
+kubectl create namespace baat
+kubectl create -f k8s/user/database-deployment.yml --namespace=baat
+kubectl create -f k8s/user/service-deployment.yml --namespace=baat
+kubectl create -f k8s/chat/database-deployment.yml --namespace=baat
+kubectl create -f k8s/chat/messaging-deployment.yml --namespace=baat
+kubectl create -f k8s/chat/service-deployment.yml --namespace=baat
+kubectl create -f k8s/websockets/service-deployment.yml --namespace=baat
+kubectl create -f k8s/gqlapi/service-deployment.yml --namespace=baat
 
 ----
 
 Update k8s/web/service-deployment.yml with IPs or DNS for dependent services.
-kubectl create -f k8s/web/service-deployment.yml
+kubectl create -f k8s/web/service-deployment.yml --namespace=baat
+
+---
+
+Logging setup - Best to create a separate cluster
+
+kubectl create namespace baatlogging
+kubectl create -f k8s/logging/elastic-deployment.yml --namespace=baatlogging
+kubectl create -f k8s/logging/kibana-deployment.yml --namespace=baatlogging
+kubectl create -f k8s/logging/fluentd-rbac.yml
+kubectl create -f k8s/logging/fluentd-demonset.yml
+
 ```
 
 ### Deploy dashboard
