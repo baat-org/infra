@@ -120,18 +120,14 @@ kubectl create -f k8s/gqlapi/service-deployment.yml --namespace=baat
 
 ----
 
-Update k8s/web/service-deployment.yml with IPs or DNS for dependent services.
+Update k8s/web/service-deployment.yml with IPs or DNS of dependent services's Load balancers.
 kubectl create -f k8s/web/service-deployment.yml --namespace=baat
 
 ---
 
 Logging setup - Best to create a separate cluster
 
-kubectl create namespace baatlogging
-kubectl create -f k8s/logging/elastic-deployment.yml --namespace=baatlogging
-kubectl create -f k8s/logging/kibana-deployment.yml --namespace=baatlogging
-kubectl create -f k8s/logging/fluentd-rbac.yml
-kubectl create -f k8s/logging/fluentd-demonset.yml
+AWS managed: https://github.com/aws-samples/aws-workshop-for-kubernetes/tree/master/02-path-working-with-clusters/204-cluster-logging-with-EFK
 
 ```
 
