@@ -34,8 +34,6 @@ spec:
               value: "always"
             - name: RABBITMQ_HOST
               value: "chat-mq"
-            - name: USER_SERVICE_URI
-              value: "http://user:8080"
           ports:
             - containerPort: 8080
           imagePullPolicy: "Always"
