@@ -33,10 +33,6 @@ kubectl create -f k8s/websockets/service-deployment.yml --namespace=baat
 kubectl create -f k8s/gqlapi/service-deployment.yml --namespace=baat
 ```  
 
-### Web service:
-1. Take note of IP/DNS for Websockets service, GQL API service and update `k8s/web/service-deployment.yml`
-2. Deploy service: `kubectl create -f k8s/web/service-deployment.yml --namespace=baat`  
-
 
 ## Minikube cluster setup
 
@@ -60,9 +56,7 @@ kubectl create -f k8s/gqlapi/service-deployment.yml --namespace=baat
 minikube ip (IP for all services)
 kubectl get services --namespace=baat (Port for each service is different)
 
-Update k8s/web/service-deployment.yml with minikube IP & ports for dependent services.
-
-kubectl create -f k8s/web/service-deployment.yml --namespace=baat
+Update `https://github.com/baat-org/rnative/blob/master/.env` with minikube IP & ports for dependent services.
 
 ---
 
@@ -120,8 +114,8 @@ kubectl create -f k8s/gqlapi/service-deployment.yml --namespace=baat
 
 ----
 
-Update k8s/web/service-deployment.yml with IPs or DNS of dependent services's Load balancers.
-kubectl create -f k8s/web/service-deployment.yml --namespace=baat
+Update `https://github.com/baat-org/rnative/blob/master/.env` with IPs or DNS of dependent services's Load balancers.
+
 
 ---
 
