@@ -1,73 +1,77 @@
 # k8s
 Kubernetes
 
-## Installations
+# Local Installations
 * Docker: https://docs.docker.com/docker-for-mac/install/
 * Virtual Box if you don't already have it: `brew cask install virtualbox`
 * Minikube: `brew cask install minikube`
 * Kubernetes cli tools: `brew install kubernetes-cli`
 
-
-## Deployments
-
-### User service and database:
+# Building All Services
+## Clone Services
 ```
-kubectl create -f k8s/user/database-deployment.yml --namespace=baat
-kubectl create -f k8s/user/service-deployment.yml --namespace=baat
-```
-
-### Chat service, messaging and database:
-```
-kubectl create -f k8s/chat/messaging-deployment.yml --namespace=baat
-kubectl create -f k8s/chat/database-deployment.yml --namespace=baat
-kubectl create -f k8s/chat/service-deployment.yml --namespace=baat
+git clone git@github.com:baat-org/core.git
+git clone git@github.com:baat-org/chat.git
+git clone git@github.com:baat-org/user.git
+git clone git@github.com:baat-org/gqlapi.git
+git clone git@github.com:baat-org/websockets.git
 ```
 
-### Websockets service:
+## Build services
 ```
-kubectl create -f k8s/websockets/service-deployment.yml --namespace=baat
+cd ../core && ./rebuildAndPublishLocal.sh && cd ../infra
+cd ../chat && ./rebuildAndPush.sh && cd ../infra
+cd ../user && ./rebuildAndPush.sh && cd ../infra
+cd ../gqlapi && ./rebuildAndPush.sh && cd ../infra
+cd ../websockets && ./rebuildAndPush.sh && cd ../infra
 ```
 
-### GQL API service:
+# Build & Push Custom JRE Image
 ```
-kubectl create -f k8s/gqlapi/service-deployment.yml --namespace=baat
-```  
+cd images/custom-jre15
+./rebuildAndPush.sh
+```
 
+# Deployments
 
-## Minikube cluster setup
+## Local Minikube Cluster
 
+### Create New Cluster
 ```
 minikube config set disk-size 20GB
 minikube config set memory 6144
 minikube delete
 minikube start
+```
 
-kubectl create namespace baat
-kubectl create -f k8s/user/database-deployment.yml --namespace=baat
-kubectl create -f k8s/user/service-deployment.yml --namespace=baat
-kubectl create -f k8s/chat/database-deployment.yml --namespace=baat
-kubectl create -f k8s/chat/messaging-deployment.yml --namespace=baat
-kubectl create -f k8s/chat/service-deployment.yml --namespace=baat
-kubectl create -f k8s/websockets/service-deployment.yml --namespace=baat
-kubectl create -f k8s/gqlapi/service-deployment.yml --namespace=baat
+### Deploy All services
+```
+cd ../chat && ./redeployAll.sh && cd ../infra
+cd ../user && ./redeployAll.sh && cd ../infra
+cd ../gqlapi && ./redeployAll.sh && cd ../infra
+cd ../websockets && ./redeployAll.sh && cd ../infra
+```
 
-----
-
+### IP Setup (Frontend => Backend)  
+```
 minikube ip (IP for all services)
 kubectl get services --namespace=baat (Port for each service is different)
 
 Update `https://github.com/baat-org/rnative/blob/master/.env` with minikube IP & ports for dependent services.
+```
 
----
-
-Logging setup
-
+### Logging Setup
+```
 kubectl create namespace baatlogging
 kubectl create -f k8s/logging/elastic-deployment.yml --namespace=baatlogging
 kubectl create -f k8s/logging/kibana-deployment.yml --namespace=baatlogging
 kubectl create -f k8s/logging/fluentd-rbac.yml
 kubectl create -f k8s/logging/fluentd-demonset.yml
+```
 
+### Dashboard
+```
+minikube dashboard
 ```
 
 ## AWS EKS cluster setup
@@ -100,63 +104,32 @@ eksctl create cluster \
     --node-ami auto
 ```
 
-### Deployment
-
+### Deploy All services
 ```
-kubectl create namespace baat
-kubectl create -f k8s/user/database-deployment.yml --namespace=baat
-kubectl create -f k8s/user/service-deployment.yml --namespace=baat
-kubectl create -f k8s/chat/database-deployment.yml --namespace=baat
-kubectl create -f k8s/chat/messaging-deployment.yml --namespace=baat
-kubectl create -f k8s/chat/service-deployment.yml --namespace=baat
-kubectl create -f k8s/websockets/service-deployment.yml --namespace=baat
-kubectl create -f k8s/gqlapi/service-deployment.yml --namespace=baat
+cd ../chat && ./redeployAll.sh && cd ../infra
+cd ../user && ./redeployAll.sh && cd ../infra
+cd ../gqlapi && ./redeployAll.sh && cd ../infra
+cd ../websockets && ./redeployAll.sh && cd ../infra
+```
 
-----
-
+### IP Setup (Frontend => Backend)
+```
 Update `https://github.com/baat-org/rnative/blob/master/.env` with IPs or DNS of dependent services's Load balancers.
-
-
----
-
-Logging setup - Best to create a separate cluster
-
-AWS managed: https://github.com/aws-samples/aws-workshop-for-kubernetes/tree/master/02-path-working-with-clusters/204-cluster-logging-with-EFK
-
 ```
 
-### Deploy dashboard
+### Logging Setup
+```
+Best to create a separate cluster
+AWS managed: https://github.com/aws-samples/aws-workshop-for-kubernetes/tree/master/02-path-working-with-clusters/204-cluster-logging-with-EFK
+```
+
+### Dashboard
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml
-
--------
-
-Create eks-admin-service-account.yaml with following:
-
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: eks-admin
-  namespace: kube-system
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: eks-admin
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-- kind: ServiceAccount
-  name: eks-admin
-  namespace: kube-system
-
--------
-kubectl apply -f eks-admin-service-account.yaml
+kubectl apply -f k8s/dashboard/eks-admin-service-account.yaml
 
 -------
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}')
@@ -175,7 +148,6 @@ kubectl get svc --all-namespaces
 kubectl delete svc `service-name`
 
 eksctl delete cluster --name baat
-
 ```
 
 ## Useful tips:
@@ -188,11 +160,6 @@ kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h 
 ### Get a service's URL
 ```
 minikube service <<service name>> --url
-```
-
-### Minikube Dashboard
-```
-minikube dashboard
 ```
 
 ### Good resources:
