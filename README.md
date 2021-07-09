@@ -1,5 +1,6 @@
 # Architecture
-![IMG_20210709_130348](https://user-images.githubusercontent.com/12097639/125075389-6f3efa00-e0b6-11eb-8824-f23462b24890.jpg)
+![baat](https://user-images.githubusercontent.com/12097639/125075573-b9c07680-e0b6-11eb-96a8-d484a6f45987.jpeg)
+
 
 
 # infra
