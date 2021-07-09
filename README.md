@@ -1,5 +1,9 @@
-# k8s
-Kubernetes
+# Architecture
+![IMG_20210709_130348](https://user-images.githubusercontent.com/12097639/125075389-6f3efa00-e0b6-11eb-8824-f23462b24890.jpg)
+
+
+# infra
+Infrastructure (Kubernetes)
 
 # Local Installations
 * Docker: https://docs.docker.com/docker-for-mac/install/
