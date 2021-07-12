@@ -19,10 +19,10 @@ git clone git@github.com:baat-org/websockets.git
 
 ## Build services
 ```
-cd ../core && ./rebuildAndPublishLocal.sh && cd ../infra
-cd ../chat && ./rebuildAndPush.sh && cd ../infra
-cd ../user && ./rebuildAndPush.sh && cd ../infra
-cd ../gqlapi && ./rebuildAndPush.sh && cd ../infra
+cd ../core && ./rebuildAndPublishLocal.sh && cd ../infra && 
+cd ../chat && ./rebuildAndPush.sh && cd ../infra && 
+cd ../user && ./rebuildAndPush.sh && cd ../infra && 
+cd ../gqlapi && ./rebuildAndPush.sh && cd ../infra && 
 cd ../websockets && ./rebuildAndPush.sh && cd ../infra
 ```
 
@@ -46,18 +46,29 @@ minikube start
 
 ### Deploy All services
 ```
-cd ../chat && ./redeployAll.sh && cd ../infra
-cd ../user && ./redeployAll.sh && cd ../infra
-cd ../gqlapi && ./redeployAll.sh && cd ../infra
-cd ../websockets && ./redeployAll.sh && cd ../infra
+cd ../chat && ./redeployAll.sh && cd ../infra && 
+cd ../user && ./redeployAll.sh && cd ../infra && 
+cd ../gqlapi && ./redeployAll.sh && cd ../infra && 
+cd ../websockets && ./redeployAll.sh && cd ../infra 
 ```
 
 ### IP Setup (Frontend => Backend)  
+#### Option 1 Minikube IP
 ```
 minikube ip (IP for all services)
 kubectl get services --namespace=baat (Port for each service is different)
 
 Update `https://github.com/baat-org/rnative/blob/master/.env` with minikube IP & ports for dependent services.
+```
+
+#### Option 2 Port forwarding (Preferred)
+```
+kubectl port-forward service/gqlapi 8081:8080 --namespace=baat
+kubectl port-forward service/websockets 8082:8080 --namespace=baat
+kubectl port-forward service/user 8083:8080 --namespace=baat
+kubectl port-forward service/chat 8084:8080 --namespace=baat
+
+Update `https://github.com/baat-org/rnative/blob/master/.env` with localhost and above port.
 ```
 
 ### Logging Setup
