@@ -17,6 +17,7 @@ Infrastructure (Kubernetes)
 ```
 git clone git@github.com:baat-org/core.git
 git clone git@github.com:baat-org/chat.git
+git clone git@github.com:baat-org/channel.git
 git clone git@github.com:baat-org/user.git
 git clone git@github.com:baat-org/gqlapi.git
 git clone git@github.com:baat-org/websockets.git
@@ -26,6 +27,7 @@ git clone git@github.com:baat-org/websockets.git
 ```
 cd ../core && ./rebuildAndPublishLocal.sh && cd ../infra && 
 cd ../chat && ./rebuildAndPush.sh && cd ../infra && 
+cd ../channel && ./rebuildAndPush.sh && cd ../infra && 
 cd ../user && ./rebuildAndPush.sh && cd ../infra && 
 cd ../gqlapi && ./rebuildAndPush.sh && cd ../infra && 
 cd ../websockets && ./rebuildAndPush.sh && cd ../infra
@@ -51,7 +53,8 @@ minikube start
 
 ### Deploy All services
 ```
-cd ../chat && ./redeployAll.sh && cd ../infra && 
+cd ../chat && ./redeployAll.sh && cd ../infra &&
+cd ../channel && ./redeployAll.sh && cd ../infra && 
 cd ../user && ./redeployAll.sh && cd ../infra && 
 cd ../gqlapi && ./redeployAll.sh && cd ../infra && 
 cd ../websockets && ./redeployAll.sh && cd ../infra 
@@ -72,6 +75,7 @@ kubectl port-forward service/gqlapi 8081:8080 --namespace=baat
 kubectl port-forward service/websockets 8082:8080 --namespace=baat
 kubectl port-forward service/user 8083:8080 --namespace=baat
 kubectl port-forward service/chat 8084:8080 --namespace=baat
+kubectl port-forward service/channel 8085:8080 --namespace=baat
 
 Update `https://github.com/baat-org/rnative/blob/master/.env` with localhost and above port.
 ```
@@ -123,6 +127,7 @@ eksctl create cluster \
 ### Deploy All services
 ```
 cd ../chat && ./redeployAll.sh && cd ../infra
+cd ../channel && ./redeployAll.sh && cd ../infra
 cd ../user && ./redeployAll.sh && cd ../infra
 cd ../gqlapi && ./redeployAll.sh && cd ../infra
 cd ../websockets && ./redeployAll.sh && cd ../infra
