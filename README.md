@@ -8,8 +8,8 @@ Infrastructure (Kubernetes)
 
 # Local Installations
 * Docker: https://docs.docker.com/docker-for-mac/install/
-* Virtual Box if you don't already have it: `brew cask install virtualbox`
-* Minikube: `brew cask install minikube`
+* Virtual Box if you don't already have it: `brew install --cask virtualbox`
+* Minikube: `brew install minikube`
 * Kubernetes cli tools: `brew install kubernetes-cli`
 
 # Building All Services
